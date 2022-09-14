@@ -48,7 +48,7 @@ $search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->quer
    $search = '';
    foreach ( $search_words as $word ) {
      if ( !empty($word) ) {
-       $search_word = $wpdb->prepare("%{$word}%");
+       $search_word = $wpdb->prepare("%%{$word}%%"); // プレースホルダーが使用できるprepare関数：'SQL文字定数の中で%を使う場合、LIKE のワイルドカードも含めて、 %% のように二重の % を書いてエスケープしなければなりません'
          
        $search .= " AND (
            {$wpdb->posts}.post_title LIKE '{$search_word}'
