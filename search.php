@@ -894,7 +894,7 @@ $get_cats = [ // 各検索項目を格納する総合配列（箱）
                             <p class="thumbnail"><?php the_post_thumbnail(); ?></p>
                         <!--サムネイルが無い場合、ダミー写真を表示-->
                         <?php else: ?>
-                            <p class="thumbnail"><img src="<?php echo get_template_directory_uri(); ?>/img/thumbnail-dammy.jpg" alt=""></p>
+                            <p class="thumbnail"><img src="<?php echo esc_url( get_template_directory_uri().'/img/thumbnail-dammy.jpg' ); ?>" alt="ダミーサムネイル"></p>
                         <?php endif; ?>
                         <div class="list_subjectInfo">
                             <span>小見出し</span>
