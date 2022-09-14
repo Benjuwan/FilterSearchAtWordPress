@@ -951,7 +951,7 @@ $get_cats = [ // 各検索項目を格納する総合配列（箱）
                 <?php the_posts_pagination( [
                     'prev_text' => '&larr;',
                     'next_text' => '&rarr;',
-	                'total' => $my_query->max_num_pages // $my_query（指定した配列名を記入）
+	                'total' =>  htmlspecialchars($my_query->max_num_pages, ENT_QUOTES) // $my_query（指定した配列名を記入）
                 ] ); ?>
         </div>
         <?php endif; // 検索カテゴリ有無のendif(wp_debug対策) ?>
