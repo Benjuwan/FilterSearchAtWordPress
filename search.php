@@ -290,7 +290,7 @@ $get_cats = [ // 各検索項目を格納する総合配列（箱）
             $SchoolTypeSlug = get_term_by('slug', $val, 'school_cat');
         // var_dump($SchoolTypeSlug);
         }
-        printf( __( '検索結果 %s', 'altitude' ), '<span id="SerachKeywords">'.$SchoolTypeSlug->name.'で、フリーワード：'. esc_html( get_search_query() ) . '</span>' ); // echoと同義 ?>
+        printf( __( '検索結果 %s', 'altitude' ), '<span id="SerachKeywords">'. htmlspecialchars($SchoolTypeSlug->name, ENT_QUOTES) .'で、フリーワード：'. esc_html( get_search_query() ) . '</span>' ); // echoと同義  ?>
             <?php $allsearch = new WP_Query([
             'posts_per_page' => -1, // 全件取得
             'post_type' => 'school', // カスタム投稿タイプを指定
