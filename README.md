@@ -138,7 +138,7 @@ $search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->quer
  if ( count($search_words) > 0 ) { // 配列の中身が存在すれば下記の処理へ移行
    $search = ''; // プレースホルダー用の変数
    foreach ( $search_words as $word ) { // 配列（$search_words）の中身をそれぞれ $word に
-     if ( !empty($word) ) { // 変数wordが 空 || null の状態でない（false）なら下記の処理へ移行
+if ( !empty($word) ) { // $wordが 空 || null の状態でない（false）なら下記の処理へ移行
 
       $sql_act = " AND ( // 実行するsql（※ここの記述に問題がある？？？）
           {$wpdb->posts}.post_title LIKE '{$word}'
