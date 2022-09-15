@@ -64,13 +64,14 @@ WordPressサイトで使用できる「絞り込み（複数）検索機能」�
 
 
 ### 改良点
-（search.phpでの）検索結果表示に関する条件分岐に関して
+・検索結果表示に関する条件分岐に関して（search.php）
 
 現状、**検索項目をまとめて格納している変数（$get_cats）の中身を「検索結果ごとに区分け」して条件分岐**しており、**検索結果の項目表示用見出し(h2)と当該コンテンツ用の2箇所に同じ記述**を行っている。
 
     
 （例：検索結果ごとに区分け）
 ```
+（search.php）
 |--- ?php if( 
     get_search_query() && 
     $get_cats = 
@@ -122,6 +123,49 @@ WordPressサイトで使用できる「絞り込み（複数）検索機能」�
 これをもう少し整理してスマートにできればと試行錯誤....
 
 
+・wpdb::prepare() のクエリー引数にはプレースホルダーが必要（functions.php）
+```
+（functions.php）
+|--- $wpdb->prepare("%%{$word}%%"); 
+```
+prepare(第一引数：実行するsql, 第二引数：プレースホルダー)を使うには、第二引数：プレースホルダーが必須だが指定すると**wpdb::prepare() のクエリー引数にはプレースホルダーが必要（functions.php）**というエラー(notice)が表示される
+
+```
+$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : ''); // **取得した検索キーワードを半角スペース区切りで配列へ変換**
+ if ( count($search_words) > 0 ) { // **配列の中身が存在すれば下記の処理へ移行**
+   $search = ''; // **プレースホルダー用の変数**
+   foreach ( $search_words as $word ) { // **配列（$search_words）の中身をそれぞれ $word に**
+     if ( !empty($word) ) { // **$wordが 空 || null で無いなら下記の処理へ移行**
+
+      $sql_act = " AND ( // **実行するsql（※ここの記述に問題がある？？？）**
+          {$wpdb->posts}.post_title LIKE '{$word}'
+          OR {$wpdb->posts}.post_content LIKE '{$word}'
+          
+          OR {$wpdb->posts}.ID IN (
+            SELECT distinct r.object_id
+            FROM {$wpdb->term_relationships} AS r
+            INNER JOIN {$wpdb->term_taxonomy} AS tt ON r.term_taxonomy_id = tt.term_taxonomy_id
+            INNER JOIN {$wpdb->terms} AS t ON tt.term_id = t.term_id
+            WHERE t.name LIKE '{$word}'
+          OR t.slug LIKE '{$word}'
+          OR tt.description LIKE '{$word}'
+          )
+          
+          OR {$wpdb->posts}.ID IN (
+            SELECT distinct post_id
+            FROM {$wpdb->postmeta}
+            WHERE {$wpdb->postmeta}.meta_key IN ('meta-field-slug','meta-field-slug','meta-field-slug','meta-field-slug','meta-field-slug','meta-field-slug') AND meta_value LIKE '{$word}'
+          )
+      ) ";
+
+     $result .= $wpdb->prepare($sql_act, $search); // **結合した形で変数（返却値）に格納**
+
+     } // if ( !empty($word) )
+    } // foreach
+ } // if ( count($search_words) > 0 )
+ 
+ return $result;
+```
 
 ### 注意点
 検索履歴の保存機能に関して：「localStorage」はJavascriptから自由にアクセスできる性質のため「メールアドレス・住所・氏名など個人情報」に関する内容がある場合はセキュリティ面で大きな懸念がある。**デリケートな内容・項目がある場合は使用しない**こと（＝コメントアウトで機能停止させておく）
