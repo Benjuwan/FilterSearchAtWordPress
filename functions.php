@@ -43,7 +43,7 @@ if (!$wp_query->is_search)
 if (!isset($wp_query->query_vars))
  return $search;
  
-$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : ''); // 取得した検索データを半角スペース区切りで配列へ変換
+$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : ''); // 検索データが存在する場合（三項演算子：条件? true: false）は、取得した検索データを半角スペース区切りで配列へ変換
  if ( count($search_words) > 0 ) { // 配列の中身が存在すれば下記の処理へ移行
    $search = ''; // 関数の返却値（returnで指定）
    foreach ( $search_words as $word ) {

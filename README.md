@@ -134,7 +134,7 @@ WordPressサイトで使用できる「絞り込み（複数）検索機能」�
 **prepare(第一引数：実行するsql, 第二引数：プレースホルダー)**を使うには、第一引数と第二引数ともに記述必須だが、以下の内容では「wpdb::prepare() のクエリー引数にはプレースホルダーが必要」というエラー(notice)が表示されてしまう。
 
 ```
-$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : ''); // 取得した検索データを半角スペース区切りで配列へ変換
+$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : ''); // 検索データが存在する場合（三項演算子：条件? true: false）は、取得した検索データを半角スペース区切りで配列へ変換
  if ( count($search_words) > 0 ) { // 配列の中身が存在すれば下記の処理へ移行
    $search = ''; // プレースホルダー用の変数
    foreach ( $search_words as $word ) { // 配列（$search_words）の中身をそれぞれ $word に
