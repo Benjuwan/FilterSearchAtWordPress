@@ -43,13 +43,14 @@ if (!$wp_query->is_search)
 if (!isset($wp_query->query_vars))
  return $search;
  
-$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : '');
- if ( count($search_words) > 0 ) {
-   $search = '';
+$search_words = explode(' ', isset($wp_query->query_vars['s']) ? $wp_query->query_vars['s'] : ''); // 取得した検索データを半角スペース区切りで配列へ変換
+ if ( count($search_words) > 0 ) { // 配列の中身が存在すれば下記の処理へ移行
+   $search = ''; // 関数の返却値（returnで指定）
    foreach ( $search_words as $word ) {
-     if ( !empty($word) ) {
+     if ( !empty($word) ) { // $wordが 空 || null の状態でない（falseの場合）なら下記の処理へ移行
        $search_word = $wpdb->prepare("%%{$word}%%"); // プレースホルダーが使用できるprepare関数：'SQL文字定数の中で%を使う場合、LIKE のワイルドカードも含めて、 %% のように二重の % を書いてエスケープしなければなりません'
          
+       // .=（値を結合した形で変数に格納）
        $search .= " AND (
            {$wpdb->posts}.post_title LIKE '{$search_word}'
            OR {$wpdb->posts}.post_content LIKE '{$search_word}'
