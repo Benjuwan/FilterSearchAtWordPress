@@ -1,7 +1,4 @@
 # FilterSearchAtWordPress
-実装例URL：[https://k2webservice.xsrv.jp/r0105/hogefoo/](https://k2webservice.xsrv.jp/r0105/hogefoo/).
-
-
 
 ### 概要
 WordPressサイトで使用できる「絞り込み（複数）検索機能」を実装するためのファイルセットです。検索項目（カテゴリー）の設定は《カスタムタクソノミー》を使用（左記や以下の説明で出てくるカテゴリーはタクソノミーを指します）
