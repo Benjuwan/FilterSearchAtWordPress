@@ -13,7 +13,7 @@ function theme_name_scripts() {
 add_action( 'wp_enqueue_scripts', 'theme_name_scripts' );
 
 
-//全角スペースで検索語句を区切る
+// 全角スペースで検索語句を区切る
 if(isset($_GET['s'])) $_GET['s']=mb_convert_kana($_GET['s'],'s','UTF-8');
 
 
@@ -21,14 +21,15 @@ if(isset($_GET['s'])) $_GET['s']=mb_convert_kana($_GET['s'],'s','UTF-8');
  * 更新・変更が必要な箇所は「----- xxxxx -----」で指定してあります。
  */
 
-
-//検索対象にカスタム投稿タイプを含む
+// 検索対象にカスタム投稿タイプを含む
 function include_cpt_search( $query ) {
+    if ( is_admin() || ! $query->is_main_query() ) {
+      return;
+    }
     if ( $query->is_search ) {
       $query->set( 'post_type', '-----「カスタム投稿タイプ名」を記述-----' );
       // $query->set( 'post_type', [ 'hoge', 'foo' ] ); // CPTが複数ある場合は配列で指定 
     }
-    return $query;
 }
 add_filter( 'pre_get_posts', 'include_cpt_search' );
 
