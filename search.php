@@ -5,6 +5,8 @@
 // キーワード
 $s = $_GET['s'];
 
+/* 各項目ごとに条件（チェックされていない場合）によって明示的に状態(null)を指定してやることで WordPress の debugMode: true 時のエラー回避 */
+
 // ドロップダウンリストの項目
 if (!isset($_GET['get_searches']) || $_GET['get_searches'] === '') {
     $get_searches = null;
@@ -51,9 +53,10 @@ if (!isset($_GET['get_rikei01']) || $_GET['get_rikei01'] === '') {
     $get_rikei01 = $_GET['get_rikei01'];
 }
 
+/* ジャンルで【どれか（get_bunkei01 〜 get_rikei01まで）選択されている場合のみ】$get_majorがtrueになる。この条件分岐がないと、$get_majorは常にtrueとなり、絞り込み検索時の他の条件にまで割り込んでくる */
 // ジャンルをまとめた変数（get_major）
 if ($get_bunkei01 || $get_bunkei02 || $get_bunkei03 || $get_bunri01 || $get_bunri02 || $get_rikei01) {
-    $get_major = [
+    $get_major = [ // 項目[アルファベット]の内容をまとめて管理する小分け用の配列
         $get_bunkei01,
         $get_bunkei02,
         $get_bunkei03,
@@ -62,7 +65,7 @@ if ($get_bunkei01 || $get_bunkei02 || $get_bunkei03 || $get_bunri01 || $get_bunr
         $get_rikei01
     ];
 } else {
-    $get_major = null;
+    $get_major = null;　// 明示的に状態(null)を指定してやることで WordPress の debugMode: true 時のエラー回避
 }
 
 // 検索用データ（キーワード、ドロップダウンリストの項目、エリア項目、ジャンル項目）をまとめた変数（get_cats）
@@ -73,12 +76,15 @@ $get_cats = [
     $get_major
 ];
 
+
+/* 以下は検索結果ページで各コンテンツを表示する(WP_QueryのtaxQueryで使用する)ための記述 */
+
 // タクソノミーデータ（ドロップダウンリストの項目）
 $tax_TargetTaxonomy = [
-    'taxonomy' => 'taxonomy_name',
-    'field' => 'slug',
-    'terms' => $get_searches,
-    'operator' => 'IN',
+    'taxonomy' => 'taxonomy_name', // タクソノミー名
+    'field' => 'slug', // スラッグでの指定を明記
+    'terms' => $get_searches, // 当該タクソノミーに該当する(検索項目/タームの)変数名を指定（変数名の命名は検索項目の変数名とリンクしたようなものにしたほうが無難）
+    'operator' => 'IN', // ('AND'どちらも(AND検索) / 'IN'どちらか(OR検索) / 'NOT IN'それら以外)
 ];
 
 // タクソノミーデータ（エリア項目）

@@ -174,10 +174,12 @@ body.search .searchAgain #search_details_box .SearchWrapper {
   text-align: center;
 }
 
-#uniBox, #VocBox {
+#uniBox,
+#VocBox {
   display: none;
 }
-#uniBox.inview, #VocBox.inview {
+#uniBox.inview,
+#VocBox.inview {
   display: block;
 }
 
@@ -225,19 +227,23 @@ body.search .searchAgain #search_details_box .SearchWrapper {
     border-radius: 8px;
     padding: 16px;
   }
-  .SearchWrapper #SearchMainWrapper, .SearchWrapper .VocChilderen {
+  .SearchWrapper #SearchMainWrapper,
+.SearchWrapper .VocChilderen {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-flow: row wrap;
   }
-  .SearchWrapper #SearchMainWrapper .selectschoolWrapper, .SearchWrapper .VocChilderen .selectschoolWrapper {
+  .SearchWrapper #SearchMainWrapper .selectschoolWrapper,
+.SearchWrapper .VocChilderen .selectschoolWrapper {
     width: 20%;
   }
-  .SearchWrapper #SearchMainWrapper .areaWrapper, .SearchWrapper .VocChilderen .areaWrapper {
+  .SearchWrapper #SearchMainWrapper .areaWrapper,
+.SearchWrapper .VocChilderen .areaWrapper {
     width: 28%;
   }
-  .SearchWrapper #SearchMainWrapper #MajorBox, .SearchWrapper .VocChilderen #MajorBox {
+  .SearchWrapper #SearchMainWrapper #MajorBox,
+.SearchWrapper .VocChilderen #MajorBox {
     width: 48%;
   }
   .SearchWrapper .VocChilderen details {
@@ -249,16 +255,20 @@ body.search .searchAgain #search_details_box .SearchWrapper {
   .SearchWrapper #SearchMainWrapper {
     font-size: 12px;
   }
-  .SearchWrapper #SearchMainWrapper .selectschoolWrapper, .SearchWrapper .VocChilderen .selectschoolWrapper {
+  .SearchWrapper #SearchMainWrapper .selectschoolWrapper,
+.SearchWrapper .VocChilderen .selectschoolWrapper {
     width: 30%;
   }
-  .SearchWrapper #SearchMainWrapper .areaWrapper, .SearchWrapper .VocChilderen .areaWrapper {
+  .SearchWrapper #SearchMainWrapper .areaWrapper,
+.SearchWrapper .VocChilderen .areaWrapper {
     width: 22%;
   }
-  .SearchWrapper #SearchMainWrapper #MajorBox, .SearchWrapper .VocChilderen #MajorBox {
+  .SearchWrapper #SearchMainWrapper #MajorBox,
+.SearchWrapper .VocChilderen #MajorBox {
     width: 46%;
   }
-  .SearchWrapper #SearchMainWrapper #MajorBox .UniChildren summary, .SearchWrapper .VocChilderen #MajorBox .UniChildren summary {
+  .SearchWrapper #SearchMainWrapper #MajorBox .UniChildren summary,
+.SearchWrapper .VocChilderen #MajorBox .UniChildren summary {
     text-indent: -1em;
     padding-left: 1em;
   }
